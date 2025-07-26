@@ -10,7 +10,7 @@ export default fastifyPlugin(
     const PUBLIC_KEY = readFileSync("./public.pem");
 
     if (!JWT_AUD || !JWT_ISS || !PUBLIC_KEY) {
-      console.error("Missing Environment Variables");
+      fastify.log.error("Missing Environment Variables");
       process.exit(1);
     }
     fastify.register(JWT, {

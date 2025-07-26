@@ -33,8 +33,8 @@ export default function qrcode(fastify: FastifyInstance) {
         });
         res.header("content-type", "image/png").code(200).send(image);
       } catch (err) {
-        req.log.error(err);
-        res.status(500).send("Failed to generate QR Code");
+        fastify.log.error(err);
+        return res.status(500).send("Failed to generate QR Code");
       }
     }
   );

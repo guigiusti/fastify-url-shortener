@@ -6,6 +6,20 @@ export const adminBodySchema = z.object({
 });
 export type AdminBody = z.infer<typeof adminBodySchema>;
 
+export const adminGetResponseSchema = {
+  200: z.object({
+    urls: z.array(
+      z.object({
+        shortId: z.string(),
+        url: z.string(),
+        user: z.string(),
+        createdAt: z.string(),
+      })
+    ),
+  }),
+  500: z.string().min(1),
+};
+
 export const adminResponseSchema = {
   201: z.object({
     shortUrl: z.string().min(1),
