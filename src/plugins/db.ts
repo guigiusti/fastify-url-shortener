@@ -15,7 +15,7 @@ export interface Urls {
 export default fastifyPlugin(
   async (fastify: FastifyInstance) => {
     const defaultData: Urls = { urls: [] };
-    const db = await JSONFilePreset<Urls>("db.json", defaultData);
+    const db = await JSONFilePreset<Urls>("data/db.json", defaultData);
     fastify.decorate("db", db);
     fastify.addHook("onReady", async () => {
       try {

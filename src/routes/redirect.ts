@@ -23,7 +23,7 @@ export default function redirect(fastify: FastifyInstance) {
       if (!url) {
         return res.status(404).send("URL not found");
       }
-      res.redirect(url).status(302);
+      res.redirect(encodeURI(url)).status(302);
     }
   );
 }

@@ -1,0 +1,10 @@
+{
+  "urls": [
+    {
+      "shortId": "example",
+      "url": "https://example.com",
+      "user": "example",
+      "createdAt": "2025-07-26T00:00:00.000Z"
+    }
+  ]
+}

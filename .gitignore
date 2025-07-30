@@ -10,7 +10,6 @@ dist
 # code coverage
 coverage
 *.lcov
-db.json
 # logs
 logs
 _.log

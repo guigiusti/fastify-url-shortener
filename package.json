@@ -5,7 +5,8 @@
   "private": true,
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/qrcode": "^1.5.5"
+    "@types/qrcode": "^1.5.5",
+    "@types/validator": "^13.15.2"
   },
   "peerDependencies": {
     "typescript": "^5"
@@ -24,6 +25,7 @@
     "lowdb": "^7.0.1",
     "qrcode": "^1.5.4",
     "uuid": "^11.1.0",
+    "validator": "^13.15.15",
     "zod": "^4.0.10"
   }
 }

@@ -2,35 +2,66 @@ services:
   redis:
     image: redis:latest
     container_name: redis_shortener
+    user: "100:101"
     expose:
       - "6379"
     command: ["redis-server", "--appendonly", "no", "--maxclients", "25000"]
+    read_only: true
+    tmpfs:
+      - /tmp
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
+    cap_drop: ["ALL"]
     networks:
       - backend
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M
+        reservations:
+          cpus: "0.10"
+          memory: 32M
   nginx:
     image: nginx:latest
     container_name: nginx_shortener
+    cap_drop: ["ALL"]
+    cap_add: ["NET_BIND_SERVICE", "CHOWN", "SETGID", "SETUID"]
+    security_opt:
+      - no-new-privileges:true
     ports:
-      - "80:80"
+      - "80:8080"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - redis
       - app
     networks:
       - proxy
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 128M
+        reservations:
+          cpus: "0.05"
+          memory: 64M
   app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: shortener
+    user: "app"
     env_file:
       - .env
+    tmpfs:
+      - /tmp
+    volumes:
+      - shortener_data:/app/data:rw,nosuid,nodev,noexec
     depends_on:
       redis:
         condition: service_healthy
@@ -39,12 +70,29 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: ["ALL"]
+    read_only: true
     networks:
       - backend
       - proxy
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
 
 networks:
   backend:
     internal: true
   proxy:
     driver: bridge
+
+volumes:
+  shortener_data:
+    driver: local

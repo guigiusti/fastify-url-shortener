@@ -6,6 +6,8 @@ import plugins from "./plugins";
 export const app = fastify({
   logger: { level: "warn" },
   trustProxy: 1,
+  bodyLimit: 1024 * 20,
+  maxParamLength: 32,
 });
 app.register(plugins);
 app.register(routes);

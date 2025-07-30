@@ -41,6 +41,10 @@ export default async function adminRoutes(fastify: FastifyInstance) {
     async (req, res) => {
       const { user } = req.user as { user: string };
       const { url, shortId } = req.body;
+      if (shortId && shortId.length > 0) {
+        const exists = await redis.exists(shortId as string);
+        if (exists >= 1) return res.status(400).send("ShortId already exists");
+      }
       const id = shortId ?? (await generateShortId());
       try {
         if (!url) return res.status(400).send("Missing URL");
@@ -76,12 +80,10 @@ export default async function adminRoutes(fastify: FastifyInstance) {
         if (!url || !shortId) return res.status(400).send("Missing parameters");
         const exists = await redis.exists(shortId as string);
         if (exists === 0) return res.status(404).send("ShortId not found");
-        fastify.db.data.urls.push({
-          shortId: shortId as string,
-          url,
-          user,
-          createdAt: new Date().toISOString(),
-        });
+        const entry = fastify.db.data.urls.find((u) => u.shortId === shortId);
+        if (entry) {
+          entry.url = url;
+        }
         await fastify.db.write();
         await redis.set(shortId as string, url);
         res.code(204).send();
