@@ -4,9 +4,7 @@
 <div align="center" margin-top="25px">
 
   ![](https://img.shields.io/github/languages/count/guigiusti/fastify-url-shortener)
-
   ![](https://img.shields.io/github/languages/top/guigiusti/fastify-url-shortener)
-  
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 </div>
