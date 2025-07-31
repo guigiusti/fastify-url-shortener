@@ -75,7 +75,7 @@ Para rodar no fundo (detached):
 docker compose up -d
 ```
 
-Agora basta acessar http://localhost/exemplo, ou caso tenha adicionado alguma URL, basta substituir "exemplo". O endpoint http://localhost/qrcode/exemplo retornará a imagem QR Code do URL.
+Agora basta acessar http://localhost/exemplo, ou caso tenha adicionado alguma URL, basta substituir "exemplo". O endpoint http://localhost/qrcode/exemplo retornará a imagem QR Code do URL. Caso queira utilizar o projeto com um domínio em HTTPS, recomenda-se editar os arquivos de configuração do NGINX para incluir os certificados SSL, além de configurar os arquivos de Docker e variáveis de ambiente, de forma apropriada. 
 
 ## Estrutura do Projeto
 ```
