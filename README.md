@@ -20,7 +20,7 @@
 
 Um encurtador simples de URL feito com Fastify, Redis e LowDB
 
-Com sua própria instância de Nginx e Redis configurado para rodar em um ambiente local, pode ser facilmente modificado para ser usado em outros ambientes ou com outras tecnologias.
+Com sua própria instância de Nginx e Redis configurado para rodar em um ambiente local, pode ser facilmente modificado para ser usado em outros ambientes, com HTTPS ou até com outras tecnologias.
 
 Caso queira inserir URLs encurtados previamente, sem utilizar os endpoints de admin, pode-se editar o arquivo [db.json](https://github.com/guigiusti/fastify-url-shortener/blob/main/db.json), no formato do exemplo fornecido. Ele será copiado para dentro do Docker e através do LowDB terá suas informações repassadas para o Redis.
 
